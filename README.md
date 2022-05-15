@@ -1,6 +1,9 @@
 # Foodplatform_Req
 __컴퓨터과학과 백승우__ 의 데이터베이스 과목의 프로젝트의 요구사항 명세서를 적은 장소입니다.
 
+# 데이터베이스
+* create database foodplatform;
+
 # 사장님
 * create table ceo(ceoid varchar(45) not null primary key, ceoname varchar(45) not null, ceoshop varchar(45) not null);
 
