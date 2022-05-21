@@ -21,6 +21,17 @@ __컴퓨터과학과 백승우__ 의 데이터베이스 과목의 프로젝트�
 
 10. 가게정보는 가게 아이디로 식별한다.
 
+# 릴레이션 스키마
+ceo : ceoid, ceoname, ceoshop
+
+foodmenu : foodname, foodprice, foodmesort
+
+orderlog : no, user, product, ymd
+
+orderlog2 : user, product, ymd
+
+totalrevenue : shopname,	sellmenu,	sellcount,	totalmoney
+
 
 # 데이터베이스
 * create database foodplatform;
