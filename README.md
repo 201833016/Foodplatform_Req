@@ -25,7 +25,7 @@ __컴퓨터과학과 백승우__ 의 데이터베이스 과목의 프로젝트�
 # 릴레이션 스키마
 ceo : ceoid, ceoname, ceoshop
 
-user : id,	password,	name,	money,	grade, 	ordercount
+user : id,	password,	name,	money,	grade, 	ordercount, cpid
 
 foodmenu : foodname, foodprice, foodmesort
 
@@ -35,6 +35,7 @@ orderlog2 : user, product, ymd
 
 totalrevenue : shopname,	sellmenu,	sellcount,	totalmoney
 
+coupon : cpid, discount
 
 # 데이터베이스
 * create database foodplatform;
