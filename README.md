@@ -37,6 +37,8 @@ totalrevenue : shopname,	sellmenu,	sellcount,	totalmoney
 
 coupon : cpid, discount, cpname
 
+eventwin : userid, cpid, grade, discount, eventname
+
 # 데이터베이스
 * create database foodplatform;
 
@@ -134,8 +136,48 @@ cpname varchar(45),
 primary key(cpid)
 );
 
-> insert into coupon values('cp01', 1000);
+> insert into coupon values('cp01', 1000, '1000원할인');
 > 
->insert into coupon values('cp02', 3000);
+>insert into coupon values('cp02', 3000, '3000원할인');
 >
->insert into coupon values('cp03', 5000);
+>insert into coupon values('cp03', 5000, '5000원할인');
+
+# 소유한 쿠폰
+create table eventwin(
+userid varchar(45),
+cpid varchar(45),
+grade varchar(45),
+discount int,
+eventname varchar(45),
+);
+
+# 테이블 정규화
+제1정규형
+[table] eventwin
+- userid에서 kim이 쿠폰을 2개를 가지고 있어 중복.
+- 제1정규형에 속하게 하기위해, 투플마다 cpid 속성값을 1개씩만 포함하도록, 분해, 모든 속성이 원자 값을 가지도록 한다.
+
+
+제2정규형
+[table] eventwin
+- 부분 함수 종속을 제거하고 모든 속성이 기본키에 완전 함수 종속이 되도록 릴레이션을 분해.
+- eventwin 릴레이션을 부분 함수 종속을 제거하려고 분해
+-> userid, grade [사용자 릴레이션] 
+-> cpid, eventname, discount [쿠폰 릴레이션]
+
+제3정규형
+- 모든 속성이 기본키에 이행적 함수 종속이 되지 않도록 분해
+- 릴레이션 구성의 속성집합X,Y,Z에대해  X->Y, Y ->Z가 존재하면 논리적으로 X->Z가 성립, 이때 "Z는 X에 이행적으로 종속되었다" 라고 함.
+- 이행적 함수 종속 일어나지 않도록 분해
+
+- [쿠폰 릴레이션] 분해
+-> cpid, eventname [쿠폰 명 릴레이션]
+-> eventname, discount [쿠폰 가격 릴레이션]
+
+BCNF
+- 1개 릴레이션에 여러개의 후보키가 존재하는 경우 ,제 3 정규형 까지 모두 만족해도 이상 현상이 발생 할 수 있다.
+
+[orderlog2]
+- user, foodmenu [주문자 - 메뉴 릴레이션]
+- foodmenu, shop[메뉴 - 가게 릴레이션]
+
