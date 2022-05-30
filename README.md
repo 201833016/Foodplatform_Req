@@ -175,9 +175,8 @@ eventname varchar(45),
 - -> eventname, discount [쿠폰 가격 릴레이션]
 
 BCNF
+[table] orderlog2
 - 1개 릴레이션에 여러개의 후보키가 존재하는 경우 ,제 3 정규형 까지 모두 만족해도 이상 현상이 발생 할 수 있다.
-
-[orderlog2]
 - user, foodmenu [주문자 - 메뉴 릴레이션]
 - foodmenu, shop[메뉴 - 가게 릴레이션]
 
