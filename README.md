@@ -162,8 +162,8 @@ eventname varchar(45),
 [table] eventwin
 - 부분 함수 종속을 제거하고 모든 속성이 기본키에 완전 함수 종속이 되도록 릴레이션을 분해.
 - eventwin 릴레이션을 부분 함수 종속을 제거하려고 분해
--> userid, grade [사용자 릴레이션] 
--> cpid, eventname, discount [쿠폰 릴레이션]
+- -> userid, grade [사용자 릴레이션] 
+- -> cpid, eventname, discount [쿠폰 릴레이션]
 
 제3정규형
 - 모든 속성이 기본키에 이행적 함수 종속이 되지 않도록 분해
@@ -171,8 +171,8 @@ eventname varchar(45),
 - 이행적 함수 종속 일어나지 않도록 분해
 
 - [쿠폰 릴레이션] 분해
--> cpid, eventname [쿠폰 명 릴레이션]
--> eventname, discount [쿠폰 가격 릴레이션]
+- -> cpid, eventname [쿠폰 명 릴레이션]
+- -> eventname, discount [쿠폰 가격 릴레이션]
 
 BCNF
 - 1개 릴레이션에 여러개의 후보키가 존재하는 경우 ,제 3 정규형 까지 모두 만족해도 이상 현상이 발생 할 수 있다.
