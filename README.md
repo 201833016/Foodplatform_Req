@@ -25,17 +25,17 @@ __컴퓨터과학과 백승우__ 의 데이터베이스 과목의 프로젝트�
 # 릴레이션 스키마
 ceo : ceoid, ceoname, ceoshop
 
-user : id,	password,	name,	money,	grade, 	ordercount, cpid
+user : id,	password,	name,	money,	grade, 	ordercount
 
 foodmenu : foodname, foodprice, foodmesort
 
-orderlog : no, user, product, ymd
+orderlog : no, user, product, ymd, count, shop
 
-orderlog2 : user, product, ymd
+orderlog2 : user, product, ymd, count, shop
 
 totalrevenue : shopname,	sellmenu,	sellcount,	totalmoney
 
-coupon : cpid, discount
+coupon : cpid, discount, cpname
 
 # 데이터베이스
 * create database foodplatform;
@@ -55,7 +55,6 @@ name varchar(45) not null,
 money int default 0,
 grade varchar(45) not null default '브론즈',
 ordercount int default 0,
-cpid varchar(45),
 primary key (id)
 );
 
@@ -92,6 +91,8 @@ no int not null
 id varchar(45),
 product varchar(45),
 ymd date,
+count int,
+shop varchar(45),
 primary key (no),
 foreign key(user) references user.(id),
 foreign key(product) references foodmenu.(foodname)
@@ -101,7 +102,8 @@ foreign key(product) references foodmenu.(foodname)
 * create table orderlog2(
 id varchar(45),
 product varchar(45),
-ymd date
+ymd date,
+shop varchar(45)
 );
 
 # 종합 수익
@@ -128,6 +130,7 @@ totalmoney int default 0
 create table coupon(
 cpid varchar(45) not null,
 discount int not null,
+cpname varchar(45),
 primary key(cpid)
 );
 
