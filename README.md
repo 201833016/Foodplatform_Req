@@ -15,11 +15,16 @@ __컴퓨터과학과 백승우__ 의 데이터베이스 과목의 프로젝트�
 9. 가게에 대한 가게아이디, 사장이름, 가게명 정보를 유지해야 한다.
 10. 가게정보는 가게 아이디로 식별한다.
 
-11. 쿠폰은 하나씩만 존재하며, 사용자는 여러 쿠폰을 가질 수 있다.
+11. 쿠폰은 하나씩만 존재하며, 사용자 한명이 여러 쿠폰을 가질 수 없다.
 12. 쿠폰이 추첨되어지면 쿠폰아이디, 사용자이름, 할인가격 정보를 유지해야한다.
+13. 쿠폰은 쿠폰아이디로 식별한다.
 
-13. 주문내역은 하나의 사용자가 여러개의 주문을 할수 있다.
-14. 사용자가 주문을하면 주문번호, 사용자아이디, 주문음식, 주문날짜 정보를 유지해야한다.
+13. 장바구니는 하나의 사용자가 여러개의 등록을 할수 있다.
+14. 사용자가 등록을하면 사용자아이디, 주문음식, 주문날짜 정보를 유지해야한다.
+
+15. 주문내역은 하나의 사용자가 여러개의 주문을 할수 있다.
+16. 사용자가 주문을하면 주문번호, 사용자아이디, 주문음식, 주문날짜 정보를 유지해야한다.
+17. 주문내역은 주문번호로 식별한다.
 
 
 # 릴레이션 스키마
@@ -29,11 +34,9 @@ user : id,	password,	name,	money,	grade, 	ordercount
 
 foodmenu : foodname, foodprice, foodmesort
 
-orderlog : no, user, product, ymd, count, shop
+orderlog : no, user, product, ymd, count, shop, TPrice
 
-orderlog2 : user, product, ymd, count, shop
-
-totalrevenue : shopname,	sellmenu,	sellcount,	totalmoney
+orderlog2 : user, product, ymd, count, shop, TPrice
 
 coupon : cpid, discount, cpname
 
@@ -45,9 +48,9 @@ eventwin : userid, cpid, grade, discount, eventname
 # 사장님
 * create table ceo(ceoid varchar(45) not null primary key, ceoname varchar(45) not null, ceoshop varchar(45) not null);
 
-> INSERT INTO ceo VALUES ('ChickenCeo', '닭튀김사장', '치킨');
+> INSERT INTO ceo VALUES ('chickenceo', '닭튀김사장', '치킨');
 >
-> INSERT INTO ceo VALUES ('CafeCeo', '커피사장', '카페');
+> INSERT INTO ceo VALUES ('cafeceo', '커피사장', '카페');
 
 # 사용자
 * create table user(
@@ -71,7 +74,6 @@ primary key (id)
 foodname varchar(45) not null,
 foodprice int,
 foodmesort varchar(45),
-foodstock int,
 primary key (foodname)
 );
 
@@ -89,12 +91,13 @@ primary key (foodname)
 
 # 주문내역
 * create table orderlog(
-no int not null
-id varchar(45),
+no int not null auto_increment,
+user varchar(45),
 product varchar(45),
 ymd date,
 count int,
 shop varchar(45),
+TPrice int default 0,
 primary key (no),
 foreign key(user) references user.(id),
 foreign key(product) references foodmenu.(foodname)
@@ -102,31 +105,13 @@ foreign key(product) references foodmenu.(foodname)
 
 # 장바구니
 * create table orderlog2(
-id varchar(45),
+user varchar(45),
 product varchar(45),
 ymd date,
-shop varchar(45)
+shop varchar(45),
+TPrice int default 0
 );
 
-# 종합 수익
-create table totalrevenue(
-shopname varchar(45) not null,
-sellmenu varchar(45) not null primary key,
-sellcount int default 0,
-totalmoney int default 0
-);
-
-> insert into totalrevenue(shopname, sellmenu) values('치킨', '후라이드 치킨');
->
->insert into totalrevenue(shopname, sellmenu) values('치킨', '음료');
->
->insert into totalrevenue(shopname, sellmenu) values('치킨', '치킨소스');
->
->insert into totalrevenue(shopname, sellmenu) values('카페', '아메리카노');
->
->insert into totalrevenue(shopname, sellmenu) values('카페', '카페라떼');
->
->insert into totalrevenue(shopname, sellmenu) values('카페', '조각케잌');
 
 # 쿠폰
 create table coupon(
@@ -144,11 +129,12 @@ primary key(cpid)
 
 # 소유한 쿠폰
 create table eventwin(
-userid varchar(45),
+userid varchar(45) not null,
 cpid varchar(45),
 grade varchar(45),
 discount int,
 eventname varchar(45),
+primary key(userid)
 );
 
 # 테이블 정규화
